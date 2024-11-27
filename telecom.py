@@ -148,6 +148,57 @@ def probability_histogram(basis, proba_coef, order_by="binary"):
     return xlabels, coef_to_plot
 
 
+def signal_norm(signal):
+    """Returns array of the norms of the signals that are in the COLUMNS of a signal matrix.
+    The used norm is ||X|| = sqrt(x1²+x2²+...+xn²)."""
+    return np.sqrt(np.sum(signal**2, axis=0))
+
+
+def CCR(Y, P, T, verbose=False):
+    """Conventional correlation receiver (CCR)
+    Parameters:
+    - Y             matrix of shape (M, K) containing signal of length M received by K antennas
+    - P             matrix of shape (M, N) containing N pilot signals of length M
+    - T             detection thresold:
+                    if the correlation value for a certain pilot is greater than T, the corresponding bit in the activity pattern is set to 1
+
+    Returns:
+    - alpha_CCR     CCR estimation of the activity pattern
+    - Y_normed      signal matrix Y normalized such that the signal norm is 1 for every antenna
+    """
+
+    K = np.shape(Y)[1]
+    N = np.shape(P)[1]
+
+    # normalize each received signal
+    if verbose:
+        print(f"norms of received signals before normalization: {signal_norm(Y)}")
+    Y_normed = Y / signal_norm(Y)
+    if verbose: 
+        print(f"norms of received signals after normalization: {signal_norm(Y_normed)}")
+
+    # compute correlation with all the pilots
+    f = np.zeros(shape=(N, K))             # correlation measure
+    for n in range(N):
+        for k in range(K):
+            f[n, k] = np.sum(Y_normed[:, k]*P[:, n])
+
+    # average the correlations over the channels
+    f = np.abs(f)
+    f = np.mean(f, axis=1)
+
+    # find the activity pattern according to the thresold
+    alpha_CCR = np.zeros(N)
+    alpha_CCR[f>T] = 1
+
+    if verbose:
+        print(f"correlation measure averaged over all K channels: {f}")
+        print(f"identified activity pattern: {alpha_CCR}")
+
+    return alpha_CCR, Y_normed
+
+
+
 
 def main():
     """main function for testing purposes"""
