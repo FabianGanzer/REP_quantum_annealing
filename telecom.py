@@ -184,6 +184,8 @@ def CCR(Y, P, T, verbose=False):
             f[n, k] = np.sum(Y_normed[:, k]*P[:, n])
 
     # average the correlations over the channels
+    if verbose:
+        print(f"matrix of correlations:\n{f}")
     f = np.abs(f)
     f = np.mean(f, axis=1)
 

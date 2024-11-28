@@ -2,18 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from telecom import get_ising_parameters, binary_to_decimal, probability_histogram
-from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, get_state
+from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, get_state, find_state_index, draw_graph, matrix_histogram, is_connected, adjacency_from_couplings
 
-
-def find_state_index(state, state_set):
-    """Parameters:
-    - state     qt.Qobj         (state to find in a set of states)
-    - basis     list of qt.Qobj (set in which to find the state)
-    """
-    for i in range(len(state_set)):
-        if state_set[i] == state:
-            return i
-    return None
 
 
 def main():
@@ -25,7 +15,7 @@ def main():
     
     which_ctl_fct = 0   # 0: linear control function, 1: optimal control function
     neglection_rule = 1 # 0: neglect only smallest matrix element, 1: neglect everything below thresold
-    neglection_thres = 1  # thres only used if reglection_rule == 1
+    neglection_thres = 0.1  # thres only used if reglection_rule == 1
 
     nb_pts_gap = 20     # number of points for the gap computation
     nb_pts_time = 30    # number of points for resolution of the time dependant Schrodinger's equation
@@ -36,7 +26,7 @@ def main():
     height_plt = 6
     width_plt = height_plt
 
-    show = [0, 3, 4] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
+    show = [0] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
 
     # ------- Program ----------
     
@@ -62,30 +52,22 @@ def main():
     i_alpha = find_state_index(psi_alpha, basis)
     i_alpha1 = find_state_index(psi_alpha, basis1)
 
+    # Check if Graph with neglected matrix elements is connected
+    A = adjacency_from_couplings(J_n)
+    print(f"Is the graph connected? -> {is_connected(A)}")
+
     # ---------- plotting ------------
     # visualization of the matrix and the neglected matrix element
     if 0 in show:
-        x_pos, y_pos = np.meshgrid(np.arange(N), np.arange(N))
-        x_pos = x_pos.flatten()
-        y_pos = y_pos.flatten()
-        z_pos = np.zeros_like(x_pos)
-        height = J.flatten() * (-1)
+        N_row = 1
+        N_col = 2
+        fig = plt.figure(figsize=(N_col*width_plt, N_row*height_plt))
+        matrix_histogram(fig, -J, where_n, N_row, N_col, 1)
 
-        colors = ["skyblue"]*len(height)
-        for i in range(len(where_n[0])):
-            idx_n = where_n[0][i]*N + where_n[1][i]  # where is ([i], [j]) for the index (i, j), so it is necessary to fetch element 0 in order to get only the number and not the list
-            colors[idx_n] = "red"
-
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection="3d")
-        ax.bar3d(x_pos, y_pos, z_pos, dx=0.8, dy=0.8, dz=height, color=colors, edgecolor="grey")
-        ax.set_xlabel(r"$j$")
-        ax.set_ylabel(r"$i$")
-        ax.set_zlabel(r"$-J_{ij}$")
-        ax.invert_yaxis()       # to be able to look at the matrix as if it was "lying on the table"
-        ax.view_init(elev=40, azim=-110, roll=0)
+        ax2 = fig.add_subplot(N_row, N_col, 2)
+        draw_graph(ax2, J_n)
+        plt.tight_layout()
         plt.show()
-
 
     # energy levels and gap
     if 1 in show:

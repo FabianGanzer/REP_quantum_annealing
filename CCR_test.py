@@ -18,7 +18,7 @@ def main():
 
     # ----------- Program -----------
     # activity pattern
-    alpha = [1, 0, 0, 0, 0]
+    alpha = [1, 0, 1, 0, 0]
     print(f"activity pattern: {alpha}")
     alpha = np.array(alpha)
     if len(alpha) != N:
