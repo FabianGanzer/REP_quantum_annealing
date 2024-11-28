@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 
 from telecom import generate_signal, get_couplings
 
-
 def main():
     # ------ Parameters --------
     N = 100               # number of users

@@ -38,7 +38,7 @@ def main():
     psi_alpha = get_state(alpha)
 
     # Problem instance with couplings
-    J, b = get_ising_parameters(N, M, alpha, K, xi)
+    J, b, *_ = get_ising_parameters(N, M, alpha, K, xi)
 
     # modification of coupling matrix (neglecting matrix element)
     J_n, where_n = modify_coupling_matrix(J, neglection_rule, neglection_thres)

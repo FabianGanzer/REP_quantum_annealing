@@ -1,6 +1,39 @@
 import numpy as np
-from telecom import get_ising_parameters
+from scipy.stats import uniform_direction
+from telecom import get_ising_parameters, CCR, generate_signal
 from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, is_connected, adjacency_from_couplings
+
+
+def hamming_distance(array0, array1):
+    """compute the hamming distance between two arrays"""
+    return np.sum(np.bitwise_xor(array0, array1))
+
+
+def hamming_distance_distribution_CCR(N_repeat, N, M, alpha, K, xi, thres_CCR, verbose=True):
+    """computes N_repeat times a problem instance and determines the activity pattern using a CCR.
+        Computes the hamming distance between the actual and the determined activity pattern
+
+    Returns:
+    - d         hamming distance
+    - n         number of occurences of hamming distance"""
+
+    d = np.arange(N+1)
+    n = np.zeros(N+1)
+
+    alpha = np.array(alpha, dtype=int)
+    
+    for i in range(N_repeat):
+        P = uniform_direction.rvs(dim=M, size=N).transpose()
+        Y = generate_signal(alpha, P, xi, K)
+        alpha_CCR, _ = CCR(Y, P, thres_CCR)
+        
+        d_Hamming = hamming_distance(alpha, alpha_CCR)  # np.sum(np.bitwise_xor(gs_array, gs_array1))
+        n[d_Hamming] += 1
+        
+        if verbose:
+            print(f"{i:} alpha: {alpha}     CCR estimation: {alpha_CCR}   d_Hamming = {d_Hamming}")
+
+    return d, n
 
 
 def hamming_distance_distribution(N_repeat, N, M, alpha, K, xi, neglection_rule, neglection_thres, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, verbose=True):
@@ -20,7 +53,7 @@ def hamming_distance_distribution(N_repeat, N, M, alpha, K, xi, neglection_rule,
     connected_counter = 0
 
     for i in range(N_repeat):
-        J, b = get_ising_parameters(N, M, alpha, K, xi, False)
+        J, b, *_ = get_ising_parameters(N, M, alpha, K, xi, False)
         J_n, where_n = modify_coupling_matrix(J, neglection_rule, neglection_thres, False)
         N_n[i] = len(where_n[0])
         connected_counter += int(is_connected(adjacency_from_couplings(J_n)))
@@ -32,7 +65,7 @@ def hamming_distance_distribution(N_repeat, N, M, alpha, K, xi, neglection_rule,
         _, gs_string1, gs_array1 = get_groundstate(Hscheduled1, 1)
         
         
-        d_Hamming = np.sum(np.bitwise_xor(gs_array, gs_array1))
+        d_Hamming = hamming_distance(gs_array, gs_array1)  # np.sum(np.bitwise_xor(gs_array, gs_array1))
         n[d_Hamming] += 1
         
         if verbose:
@@ -41,6 +74,9 @@ def hamming_distance_distribution(N_repeat, N, M, alpha, K, xi, neglection_rule,
     N_n = np.mean(N_n)
 
     return d, n, N_n, connected_counter
+
+
+
 
 
 def main():

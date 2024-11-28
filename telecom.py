@@ -76,8 +76,9 @@ def get_couplings(Y, P):
     return J, b
 
 
-def get_ising_parameters(N, M, alpha, K, xi, verbose=True):
+def get_ising_parameters(N, M, alpha, K, xi, verbose=False):
     """
+
     Parameters:
     - N         number of users of the network
     - M         length of pilot sequences 
@@ -88,6 +89,8 @@ def get_ising_parameters(N, M, alpha, K, xi, verbose=True):
     Returns:
     - J         coupling matrix of the Ising Hamiltonian
     - b         magnetic field paramters of the Ising Hamiltonian
+    - P         pilot matrix
+    - Y         signal matrix
     """
     
     P = uniform_direction.rvs(dim=M, size=N).transpose()
@@ -98,7 +101,8 @@ def get_ising_parameters(N, M, alpha, K, xi, verbose=True):
         print("Coupling matrix of the Ising Hamiltonian:")
         print(f"{J}")
 
-    return J, b
+    return J, b, P, Y
+
 
 
 def binary_to_decimal(bin):
@@ -111,6 +115,7 @@ def binary_to_decimal(bin):
 
 def probability_histogram(basis, proba_coef, order_by="binary"):
     """
+
     Parameters:
     - basis         eigenbasis of the final Hamiltonian
     - proba_coef    probability distribution at the different time steps. The ordering is the same as the order of the eigenstates. numpy array, shape (2**N, len(timesTab))
@@ -155,11 +160,13 @@ def signal_norm(signal):
 
 
 def CCR(Y, P, T, verbose=False):
-    """Conventional correlation receiver (CCR)
+    """
+    Conventional correlation receiver (CCR)
+    
     Parameters:
-    - Y             matrix of shape (M, K) containing signal of length M received by K antennas
-    - P             matrix of shape (M, N) containing N pilot signals of length M
-    - T             detection thresold:
+    Y :            matrix of shape (M, K) containing signal of length M received by K antennas
+    P :            matrix of shape (M, N) containing N pilot signals of length M
+    T :            detection thresold:
                     if the correlation value for a certain pilot is greater than T, the corresponding bit in the activity pattern is set to 1
 
     Returns:
@@ -190,7 +197,7 @@ def CCR(Y, P, T, verbose=False):
     f = np.mean(f, axis=1)
 
     # find the activity pattern according to the thresold
-    alpha_CCR = np.zeros(N)
+    alpha_CCR = np.zeros(N, dtype=int)
     alpha_CCR[f>T] = 1
 
     if verbose:
