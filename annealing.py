@@ -113,7 +113,7 @@ def get_groundstate(Hscheduled, t):
     - Hscheduled        Hamiltonian scheduled with a control function
     - t                 time at which the ground state should be given
     - N                 number of qubits"""
-    dim = Hscheduled(0).shape[0]       # dimension of Hilber space
+    dim = Hscheduled(0).shape[0]       # dimension of Hilbert space
     N = int(np.log2(dim))           # number of qubits
     states_string = list(product([0,1], repeat = N))
     states_string = ["".join([str(i) for i in state]) for state in states_string]

@@ -7,7 +7,7 @@ from scipy.stats import uniform_direction
 def main():
     # --------- Parameters ---------
     N = 5               # number of users
-    M = 7               # length of id-sequence for every user
+    M = 4               # length of id-sequence for every user
     K = 10              # number of antennas
     xi = 0              # std of thermal noise
 
@@ -18,7 +18,7 @@ def main():
 
     # ----------- Program -----------
     # activity pattern
-    alpha = [1, 0, 1, 0, 0]
+    alpha = [1, 0, 0, 0, 0]
     print(f"activity pattern: {alpha}")
     alpha = np.array(alpha)
     if len(alpha) != N:

@@ -26,7 +26,7 @@ def main():
     height_plt = 6
     width_plt = height_plt
 
-    show = [0] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
+    show = [0, 3] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
 
     # ------- Program ----------
     
