@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from telecom import get_ising_parameters, binary_to_decimal, probability_histogram
-from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, get_state, find_state_index, draw_graph, matrix_histogram, is_connected, adjacency_from_couplings
+from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, get_state, find_state_index, draw_graph, matrix_histogram, is_connected, adjacency_from_couplings, degree_of_nodes
 
 
 
@@ -55,6 +55,9 @@ def main():
     # Check if Graph with neglected matrix elements is connected
     A = adjacency_from_couplings(J_n)
     print(f"Is the graph connected? -> {is_connected(A)}")
+    degrees = degree_of_nodes(A)
+    print(f"The nodes have the degrees {degrees}")
+    print(f"average degree: {np.mean(degrees):.3f}, maximum degree: {np.max(degrees)}")
 
     # ---------- plotting ------------
     # visualization of the matrix and the neglected matrix element

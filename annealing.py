@@ -250,6 +250,10 @@ def is_connected(A, verbose=False, return_B=False):
     else:
         return connected
 
+def degree_of_nodes(A):
+    """Determines the degree of the nodes from the adjacency matrix"""
+    return np.sum(A, axis=0)
+
 
 def main():
     """main for testing purposes"""
@@ -258,6 +262,7 @@ def main():
                   [0, 1, 0, 0],
                   [0, 1, 0, 0]])
     print(is_connected(A, True))
+    print(degree_of_nodes(A))
 
 
 
