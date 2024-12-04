@@ -70,7 +70,7 @@ def generate_data_for_one_thres(neglection_thres, N_per_thres, N, M, alpha, K, x
 
 def generate_data_and_save():
     # ------------ Parameters -------------
-    N_per_thres = 10
+    N_per_thres = 100
     thres_min = 0.0
     thres_max = 0.4
     thres_step = 0.01
@@ -192,8 +192,8 @@ def main():
 
     fname = f"./annealing_data/neglection_thres_{0.0}_N_{5}_M_{4}_K_{100}_xi_{0}.npy"
     check_data(fname)
-    fname = f"./annealing_data/neglection_thres_{0.15}_N_{5}_M_{4}_K_{100}_xi_{0}.npy"
-    check_data(fname, 1)
+    fname = f"./annealing_data/neglection_thres_{0.4}_N_{5}_M_{4}_K_{100}_xi_{0}.npy"
+    check_data(fname)
     
 
 
