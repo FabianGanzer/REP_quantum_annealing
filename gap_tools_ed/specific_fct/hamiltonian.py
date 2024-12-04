@@ -12,7 +12,7 @@ def hamiltonian(J,h,gamma,timesTab,tp,up):
     h : numpy array
         The local fields.
     gamma : float
-        Stenght of the transverse field.
+        Stength of the transverse field.
     timesTab : numpy array
         Discretization of the annealing period [0,T]
     tp : numpy array

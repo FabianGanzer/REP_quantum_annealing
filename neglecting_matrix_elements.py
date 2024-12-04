@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 from telecom import get_ising_parameters, binary_to_decimal, probability_histogram
 from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, get_state, find_state_index, draw_graph, matrix_histogram, is_connected, adjacency_from_couplings, degree_of_nodes
-
+from hamming_distance_distribution import hamming_distance
 
 
 def main():
@@ -26,7 +27,7 @@ def main():
     height_plt = 6
     width_plt = height_plt
 
-    show = [0, 3] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
+    show = [0, 3, 4] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
 
     # ------- Program ----------
     
@@ -38,15 +39,21 @@ def main():
     psi_alpha = get_state(alpha)
 
     # Problem instance with couplings
+    t0 = time.time()
     J, b, *_ = get_ising_parameters(N, M, alpha, K, xi)
 
     # modification of coupling matrix (neglecting matrix element)
+    t1 = time.time()
     J_n, where_n = modify_coupling_matrix(J, neglection_rule, neglection_thres)
     
 
     # solve the annealing process
     proba_coef, sigma_z_exp, basis, times_tab, tp, up, spectrum_tab, squared_gap, Hscheduled = solve_annealing(J, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time)
+    t2 = time.time()
     proba_coef1, sigma_z_exp1, basis1, times_tab1, tp1, up1, spectrum_tab1, squared_gap1, Hscheduled1 = solve_annealing(J_n, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time)
+    t3 = time.time()
+    print(f"time for the annealing computations: {t2-t1:.3f} s, {t3-t2:.3f} s")
+    print(f"time for total solving of problem: {t2-t0:.3f} s")
 
     # find the index of the state which corresponds to the activity pattern
     i_alpha = find_state_index(psi_alpha, basis)
@@ -57,7 +64,7 @@ def main():
     print(f"Is the graph connected? -> {is_connected(A)}")
     degrees = degree_of_nodes(A)
     print(f"The nodes have the degrees {degrees}")
-    print(f"average degree: {np.mean(degrees):.3f}, maximum degree: {np.max(degrees)}")
+    print(f"degrees: min: {np.min(degrees)} avg: {np.mean(degrees)}, max: {np.max(degrees)}")
 
     # ---------- plotting ------------
     # visualization of the matrix and the neglected matrix element
@@ -142,12 +149,13 @@ def main():
 
         #get the GS of the final Hamiltonian
         print(Hscheduled(1).shape)
-        _, gs_string, _ = get_groundstate(Hscheduled, 1)
+        _, gs_string, gs_array = get_groundstate(Hscheduled, 1)
         print("Ground state of the final Hamiltonian:", gs_string)
 
-        _, gs_string1, _ = get_groundstate(Hscheduled1, 1)
+        _, gs_string1, gs_array1 = get_groundstate(Hscheduled1, 1)
         print("Ground state of the final Hamiltonian with neglected matrix elements:", gs_string1)
         print("The initial activity pattern is" , alpha)
+        print(f"Bit error ratio between both annealing results: {hamming_distance(gs_array, gs_array1)/N}")
 
 
         plt.figure(figsize=(15, 5))
