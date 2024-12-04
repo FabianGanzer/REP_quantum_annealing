@@ -13,7 +13,7 @@ def warn_user(path):
         time.sleep(1)
 
 
-def check_data(fname):
+def check_data(fname, check_content=False):
     loaded_data = np.load(fname, allow_pickle=True).item()
     print("-----------------------------------------------------------")
     print(f"Check of data file {fname}")
@@ -32,14 +32,19 @@ def check_data(fname):
     print(f"gamma               = {loaded_data['gamma']}")
     print(f"which_ctl_fct       = {loaded_data['which_ctl_fct']}")
     print("-----------------------------------------------------------")
-
+    
+    if check_content:
+        print("Content:")
+        for key in loaded_data.keys():
+            print(f"\n{key}:")
+            print(loaded_data[key])
 
 
 def generate_data_for_one_thres(neglection_thres, N_per_thres, N, M, alpha, K, xi, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time):
     """simulates the annealing for a single given neglection thresold"""
     # define data collection arrays
     J_data              = np.zeros(shape=(N_per_thres, N, N))
-    J_n_data            = np.zeros_like(J_data)
+    J_n_data            = np.zeros(shape=(N_per_thres, N, N))
     alpha_data          = np.zeros(shape=(N_per_thres, N), dtype=int)
     gs_array_data       = np.zeros(shape=(N_per_thres, N), dtype=int)
     where_n_data        = []
@@ -49,7 +54,7 @@ def generate_data_for_one_thres(neglection_thres, N_per_thres, N, M, alpha, K, x
         # solve problem
         J, b, *_ = get_ising_parameters(N, M, alpha, K, xi, False)
         J_n, where_n = modify_coupling_matrix(J, 1, neglection_thres, False)
-        _, _, _, _, _, _, _, _, Hscheduled = solve_annealing(J, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, False)
+        _, _, _, _, _, _, _, _, Hscheduled = solve_annealing(J_n, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, False)
         _, _, gs_array = get_groundstate(Hscheduled, 1)
 
         # fill arrays
@@ -65,7 +70,7 @@ def generate_data_for_one_thres(neglection_thres, N_per_thres, N, M, alpha, K, x
 
 def generate_data_and_save():
     # ------------ Parameters -------------
-    N_per_thres = 20
+    N_per_thres = 10
     thres_min = 0.0
     thres_max = 0.4
     thres_step = 0.01
@@ -95,7 +100,7 @@ def generate_data_and_save():
     # number of runs
     N_neglection_thres = int((thres_max-thres_min)/thres_step)+1
     N_annealing_runs = N_neglection_thres*N_per_thres
-    print(f"{N_neglection_thres} neglection thresolds and {N_annealing_runs} annealing runs")
+    print(f"{N_neglection_thres} neglection thresolds with {N_per_thres} runs per thresold -> {N_annealing_runs} annealing runs")
 
     # activity pattern
     alpha = np.zeros(N, dtype=int)
@@ -108,7 +113,7 @@ def generate_data_and_save():
     for i in range(10):
         J, b, *_ = get_ising_parameters(N, M, alpha, K, xi, False)
         J_n, _ = modify_coupling_matrix(J, 1, 0.1, False)
-        _, _, _, _, _, _, _, _, Hscheduled = solve_annealing(J, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, False)
+        _, _, _, _, _, _, _, _, Hscheduled = solve_annealing(J_n, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, False)
         _, _, gs_array = get_groundstate(Hscheduled, 1)
     t1 = time.time()
 
@@ -136,7 +141,7 @@ def generate_data_and_save():
                 append_str = "(appended to existing file)"
 
                 J_data          = np.concatenate((loaded_dict["J"],    J_data), axis=0)
-                J_n_data        = np.concatenate((loaded_dict["J"],  J_n_data), axis=0)
+                J_n_data        = np.concatenate((loaded_dict["J_n"],  J_n_data), axis=0)
                 gs_array_data   = np.concatenate((loaded_dict["gs_array"],  gs_array_data), axis=0)
                 alpha_data      = np.concatenate((loaded_dict["alpha"],     alpha_data))
                 where_n_data    = [*loaded_dict["where_n"], *where_n_data]
@@ -187,8 +192,9 @@ def main():
 
     fname = f"./annealing_data/neglection_thres_{0.0}_N_{5}_M_{4}_K_{100}_xi_{0}.npy"
     check_data(fname)
-    fname = f"./annealing_data/neglection_thres_{0.4}_N_{5}_M_{4}_K_{100}_xi_{0}.npy"
-    check_data(fname)
+    fname = f"./annealing_data/neglection_thres_{0.15}_N_{5}_M_{4}_K_{100}_xi_{0}.npy"
+    check_data(fname, 1)
+    
 
 
 if __name__ == "__main__":
