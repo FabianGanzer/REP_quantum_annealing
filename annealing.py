@@ -2,6 +2,7 @@ import numpy as np
 import qutip as qt
 from itertools import product
 import matplotlib.pyplot as plt
+from telecom import decimal_to_binary
 
 from gap_tools_ed.specific_fct.annealing_time import annealing_time
 from gap_tools_ed.specific_fct.hamiltonian import hamiltonian
@@ -10,7 +11,7 @@ from gap_tools_ed.specific_fct.get_control_function import get_control_function
 from gap_tools_ed.specific_fct.gap import gap, spectrum
 
 
-def solve_annealing(J, b, gamma, epsilon, ctl_fct, nb_pts_gap, nb_pts_time, verbose=True):
+def solve_annealing(J, b, gamma, epsilon, ctl_fct, nb_pts_gap, nb_pts_time, verbose=True, time_evolution=True):
     """
     Parameters:
     - J             coupling matrix of the Ising Hamiltonian
@@ -63,14 +64,17 @@ def solve_annealing(J, b, gamma, epsilon, ctl_fct, nb_pts_gap, nb_pts_time, verb
 
 
     # compute time evolution using Schrödinger's equation
-    N = np.shape(J)[0]
-    state_list = [(qt.basis(2, 0) + qt.basis(2, 1))/np.sqrt(2)]*N
-    psi0 = qt.tensor(state_list)    # |+>^tensor(N) eigenstate of control hamiltonian
-
     times_tab = np.linspace(0, tp[-1], nb_pts_time)
     Hscheduled = hamiltonian(J, b, gamma, times_tab, tp, up)
    
-    proba_coef, sigma_z_exp, eigenbasis_end = evolve_state(Hscheduled, times_tab, psi0)        # eigenbasis is the eigenbasis of the problem Hamiltonian
+    if time_evolution:
+        N = np.shape(J)[0]
+        state_list = [(qt.basis(2, 0) + qt.basis(2, 1))/np.sqrt(2)]*N
+        psi0 = qt.tensor(state_list)    # |+>^tensor(N) eigenstate of control hamiltonian
+        proba_coef, sigma_z_exp, eigenbasis_end = evolve_state(Hscheduled, times_tab, psi0)        # eigenbasis is the eigenbasis of the problem Hamiltonian
+
+    else:
+        proba_coef, sigma_z_exp, eigenbasis_end = None, None, None
     
     return proba_coef, sigma_z_exp, eigenbasis_end, times_tab, tp, up, spectrum_tab, squared_gap, Hscheduled
 
@@ -163,107 +167,50 @@ def find_state_index(state, state_set):
     return None
 
 
-def matrix_histogram(fig, matrix, where_red, N_row=1, N_col=1, ax_index=1):
-    """draws the matrix elements as a histogram
-    Parameters:
-    - fig           plt.figure() to draw on
-    - matrix
-    - where_red     np.where(...) that contains the indices of those matrix elements that should be highlighted in red
-    """
-    N = np.shape(matrix)[0]
 
-    x_pos, y_pos = np.meshgrid(np.arange(N), np.arange(N))
-    x_pos = x_pos.flatten()
-    y_pos = y_pos.flatten()
-    z_pos = np.zeros_like(x_pos)
-    height = matrix.flatten()
-
-    # set list of colors such that the by where_red selected ones are red
-    colors = ["skyblue"]*len(height)
-    for i in range(len(where_red[0])):
-        idx_n = where_red[0][i]*N + where_red[1][i]  # where is ([i], [j]) for the index (i, j), so it is necessary to fetch element 0 in order to get only the number and not the list
-        colors[idx_n] = "red"
-
-    # generate plot
-    ax = fig.add_subplot(N_row, N_col, ax_index, projection="3d")
-    ax.bar3d(x_pos, y_pos, z_pos, dx=0.8, dy=0.8, dz=height, color=colors, edgecolor="grey")
-    ax.set_xlabel(r"$j$")
-    ax.set_ylabel(r"$i$")
-    ax.set_zlabel(r"$-J_{ij}$")
-    ax.invert_yaxis()       # to be able to look at the matrix as if it was "lying on the table"
-    ax.view_init(elev=40, azim=-110, roll=0)
-
-    return ax
+def Ising_energy(J, b, basisstate):
+    """Evaluates the Ising Hamiltonian for a given BASISSTATE.
+    Attention: J[i, j] has to be zero for i>j since the factor 1/2 from the 
+    Ising model is not implemented!"""
+    sigma = 1 - 2*basisstate
+    return -sigma@J@sigma - b@sigma         # factor 1/2 can be omitted because J_n is already a matrix which for i>j is zero (values only in upper right)
 
 
-def draw_graph(ax, matrix, nodecolor = "blue", edgecolor="green"):
-    """Draws a graph from matrix. Uses only upper right of the matrix and assumes an undirected graph.
-    Parameters:
-    - ax        axes to draw the graph on 
-    - J_n       matrix containing the couplings between the nodes
-    - nodecolor
-    - edgecolor
+def exhaustive_search(J, b):
+    """finds the basis state leading to the lowest energy in the Ising Model
+    by searching over all possible basis states
+    Attention: J[i, j] has to be zero for i>j since the factor 1/2 from the 
+    Ising model is not implemented!
     """
 
-    N = np.shape(matrix)[0]
-    r = 1
-    phi = np.linspace(0, 2*np.pi*(1-1/N), N)
-    x = r*np.cos(phi)
-    y = r*np.sin(phi)
-    ax.scatter(x, y, color=nodecolor)
-    for i in range(N):
-        ax.annotate(f"{i}", xy=(x[i], y[i]), color=nodecolor, xytext=(1.1*x[i], 1.1*y[i]))
-        for j in range(i+1, N):     # iterate over columns of J
-            ax.plot([x[i], x[j]], [y[i], y[j]], color=edgecolor, linewidth=10*np.abs(matrix[i, j]))
-    ax.set_aspect("equal")
-    ax.set_xlim(1.1*np.array([-r, r]))
-    ax.set_ylim(1.1*np.array([-r, r]))
-
-
-def is_connected(A, verbose=False, return_B=False):
-    """determines whether an undirected graph is connected or not by computing sum of successive powers of the adjacency matrix
-    Parameters:
-    - A         NxN adjacency matrix of the graph (must be symmetric for undirected graph)
-    - return_B  if matrix B should be returned
-
-    Returns:
-    - connected False = not connected, True = connected
-    - B         B_ij is number of walks from node i to j with length < N 
-    """
-    N = np.shape(A)[0]
-    B = np.zeros_like(A)
-    C = np.identity(N, dtype=int)
-    for _ in range(N-1):
-        C = C@A
-        B += C
-
-    if verbose:
-        print(f"B = \n{B}")
-
-    if len(np.where(B==0)[0]) == 0:
-        connected = True
-    else:
-        connected = False
+    N = np.shape(J)[0]
     
-    if return_B:
-        return connected, B
-    else:
-        return connected
+    # find energies
+    E = np.zeros(2**N)
+    for k in range(2**N):                       # search the whole basis states set
+        state_array = decimal_to_binary(k, N)   # 
+        E[k] = Ising_energy(J, b, state_array)       
 
-def degree_of_nodes(A):
-    """Determines the degree of the nodes from the adjacency matrix"""
-    return np.sum(A, axis=0)
+    # find minimum energy states
+    indices_E_min = np.where(E==np.min(E))[0]           # avoids usage of np.argmin because np.argmin only returns first occurence of the minimum value. If however there are two states that yield the minimum value equally, only one of them would be detected.
+
+    minimum_energy_states = np.zeros(shape=(len(indices_E_min), N))
+    for i in range(len(indices_E_min)):
+        minimum_energy_states[i] = decimal_to_binary(indices_E_min[i], N)
+    
+    return minimum_energy_states
+
 
 
 def main():
     """main for testing purposes"""
-    A = np.array([[0, 1, 0, 0], 
-                  [1, 0, 1, 1],
-                  [0, 1, 0, 0],
-                  [0, 1, 0, 0]])
-    print(is_connected(A, True))
-    print(degree_of_nodes(A))
-
+    from telecom import get_ising_parameters
+    import time
+    J, b, *_ = get_ising_parameters(5, 4, [1, 1, 0, 0, 0], 100, 0)
+    t0 = time.time()
+    solve_annealing(J, b, 1, 0.1, 1, 20, 30, False, False)
+    t1 = time.time()
+    print(f"{t1-t0} s")
 
 
 if __name__ == "__main__":

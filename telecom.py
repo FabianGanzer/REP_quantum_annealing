@@ -111,6 +111,10 @@ def binary_to_decimal(bin):
     powers = len(bin)-1 - np.arange(len(bin))
     dec_places = 2**powers
     return np.sum(dec_places * bin)
+
+def decimal_to_binary(decimal, N):
+    """Converts the decimal representation to binary and returns is using an array of length N."""
+    return np.array(list(np.binary_repr(decimal, width=N))).astype(int)
    
 
 def probability_histogram(basis, proba_coef, order_by="binary"):

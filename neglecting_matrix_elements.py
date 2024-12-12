@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import time
 
 from telecom import get_ising_parameters, binary_to_decimal, probability_histogram
-from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, get_state, find_state_index, draw_graph, matrix_histogram, is_connected, adjacency_from_couplings, degree_of_nodes
+from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, get_state, find_state_index, adjacency_from_couplings
+from graph import draw_graph, matrix_histogram, is_connected, degree_of_nodes
 from hamming_distance_distribution import hamming_distance
 
 
@@ -27,7 +28,7 @@ def main():
     height_plt = 6
     width_plt = height_plt
 
-    show = [0, 3, 4] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
+    show = [0, 1, 3, 4] # 0:visualization of J, 1: energy levels and gap, 2: control function, 3: evolution of the overlap, 4: probabilities in the final state
 
     # ------- Program ----------
     
@@ -155,7 +156,7 @@ def main():
         _, gs_string1, gs_array1 = get_groundstate(Hscheduled1, 1)
         print("Ground state of the final Hamiltonian with neglected matrix elements:", gs_string1)
         print("The initial activity pattern is" , alpha)
-        print(f"Bit error ratio between both annealing results: {hamming_distance(gs_array, gs_array1)/N}")
+        print(f"Bit error ratio between both annealing results: UER = {hamming_distance(gs_array, gs_array1)/N}")
 
 
         plt.figure(figsize=(15, 5))

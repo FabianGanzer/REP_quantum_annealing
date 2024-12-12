@@ -1,8 +1,8 @@
 import numpy as np
 from scipy.stats import uniform_direction
 from telecom import get_ising_parameters, CCR, generate_signal
-from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, is_connected, adjacency_from_couplings
-
+from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, adjacency_from_couplings
+from graph import is_connected
 
 def hamming_distance(array0, array1):
     """compute the hamming distance between two arrays"""
@@ -58,8 +58,8 @@ def hamming_distance_distribution(N_repeat, N, M, alpha, K, xi, neglection_rule,
         N_n[i] = len(where_n[0])
         connected_counter += int(is_connected(adjacency_from_couplings(J_n)))
 
-        _, _, _, _, _, _, _, _, Hscheduled = solve_annealing(J, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, False)
-        _, _, _, _, _, _, _, _, Hscheduled1 = solve_annealing(J_n, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, False)
+        _, _, _, _, _, _, _, _, Hscheduled = solve_annealing(J, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, verbose=False, time_evolution=False)
+        _, _, _, _, _, _, _, _, Hscheduled1 = solve_annealing(J_n, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, verbose=False, time_evolution=False)
         
         _, gs_string, gs_array = get_groundstate(Hscheduled, 1)
         _, gs_string1, gs_array1 = get_groundstate(Hscheduled1, 1)
