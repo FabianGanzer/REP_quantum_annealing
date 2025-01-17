@@ -92,14 +92,45 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
     - where_n               np.where object containing the indices of all neglected matrix elements
     """
     J_n = np.copy(J)
+    
     if neglection_rule == 0:
         where_n = np.where(J_n==-np.min(np.abs(J_n[J_n!=0])))       # complicated construction because the matrix elements of J are negative 
+    
     elif neglection_rule == 1:
         J_n[J_n==0] = -np.inf
         where_n = np.where(J_n > -neglection_thres)   
         J_n[J_n==-np.inf] = 0        
+    
+    elif neglection_rule == 2:            # neglecting a certain percentage of couplings
+        sorted_1d_indices = np.argsort(np.abs(J), axis=None)
+        sorted_2d_indices = np.unravel_index(sorted_1d_indices, np.shape(J))
+        N = np.shape(J)[0]
+        i_lower = int(N*(N+1)/2)
+        i_upper = i_lower + int(neglection_thres)
+        where_n = (sorted_2d_indices[0][i_lower:i_upper], sorted_2d_indices[1][i_lower:i_upper])
+
+    elif neglection_rule == 3:          # für jeden Qubit nur eine max. Anzahl an Verbindungen zulassen. 
+        sorted_1d_indices = np.argsort(np.abs(J), axis=None)
+        sorted_2d_indices = np.unravel_index(sorted_1d_indices, np.shape(J))
+        N = np.shape(J)[0]
+        where_n1 = []
+        where_n2 = []
+        J_n = np.copy(J)
+
+        for i in range(int(N*(N-1)/2)):
+            A = adjacency_from_couplings(J_n)
+            j = int(N*(N+1)/2) + i              # index of matrix element that should be checked
+            discard = check_matrix_element(J, j, neglection_thres)
+            if discard:
+                i1, i2 = np.unravel_index(j, np.shape(J))
+                where_n1.append(i1)
+                where_n2.append(i2)
+                where_n = (np.array(where_n1, dtype=int), np.array(where_n2, dtype=int))
+                J_n[where_n] = 0
+            
     else:
         print("unknown neglection rule!")
+    
     if verbose:
         print(f"\nmatrxelement(s) set to zero: {J_n[where_n]}")
     J_n[where_n] = 0
@@ -109,6 +140,19 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
         print(J_n)
 
     return J_n, where_n
+
+
+def check_matrix_element(J, j, max_degree):
+    """checks if a coupling is between nodes whose degree is larger than a max degree"""
+    ix, iy = np.unravel_index(j, np.shape(J))
+    degreex = np.sum(adjacency_from_couplings(J)[ix, :])
+    degreey = np.sum(adjacency_from_couplings(J)[:, iy])
+    if degreex > max_degree:
+        return 1
+    if degreey > max_degree:
+        return 1
+    
+    return 0
 
 
 def get_groundstate(Hscheduled, t):
@@ -206,11 +250,20 @@ def main():
     """main for testing purposes"""
     from telecom import get_ising_parameters
     import time
-    J, b, *_ = get_ising_parameters(5, 4, [1, 1, 0, 0, 0], 100, 0)
-    t0 = time.time()
-    solve_annealing(J, b, 1, 0.1, 1, 20, 30, False, False)
-    t1 = time.time()
-    print(f"{t1-t0} s")
+    #J, b, *_ = get_ising_parameters(5, 4, [1, 1, 0, 0, 0], 100, 0)
+    #t0 = time.time()
+    #solve_annealing(J, b, 1, 0.1, 1, 20, 30, False, False)
+    #t1 = time.time()
+    #print(f"{t1-t0} s")
+
+    J = np.array([[0, -7, -9], 
+                  [0, 0, -6],
+                  [0, 0, 0]])
+    
+    J_n, where_n = modify_coupling_matrix(J, 2, 0, False)
+    print(J)
+    print(J_n)
+    print(where_n)
 
 
 if __name__ == "__main__":

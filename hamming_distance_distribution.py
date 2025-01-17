@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.stats import uniform_direction
 from telecom import get_ising_parameters, CCR, generate_signal
-from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, adjacency_from_couplings
+from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, adjacency_from_couplings, exhaustive_search
 from graph import is_connected
 
 def hamming_distance(array0, array1):
@@ -75,6 +75,43 @@ def hamming_distance_distribution(N_repeat, N, M, alpha, K, xi, neglection_rule,
 
     return d, n, N_n, connected_counter
 
+
+def hamming_distance_distribution_exhaustive(N_repeat, N, M, alpha, K, xi, neglection_rule, neglection_thres, verbose=True):
+    """computes N_repeat times the lowest energy state by exhaustive search. Then, the Hamming distance between the 
+    groundstates of the final hamiltonian with and without modification is computed.
+    
+    Returns:
+    - d                 Hamming distance
+    - n                 number of occurences of Hamming distance d
+    - N_n               number of neglected matrix elements in J averaged over all N_repeat runs of the annealing process
+    - connected_counter count of the number of instances in which the graph with neglected matrix elements is connected 
+    """
+
+    d = np.arange(N+1)
+    n = np.zeros(N+1)
+    N_n= np.zeros(N_repeat)             # number of neglected matrix elements
+    connected_counter = 0
+
+    for i in range(N_repeat):
+        J, b, *_ = get_ising_parameters(N, M, alpha, K, xi, False)
+        J_n, where_n = modify_coupling_matrix(J, neglection_rule, neglection_thres, False)
+        N_n[i] = len(where_n[0])
+        connected_counter += int(is_connected(adjacency_from_couplings(J_n)))
+
+        minimum_energy_states = exhaustive_search(J_n, b)
+        gs_array = minimum_energy_states[0]
+
+        #print(gs_array, type(gs_array), alpha, type(alpha))
+        
+        d_Hamming = hamming_distance(np.array(gs_array, dtype=int), np.array(alpha, dtype=int))  # np.sum(np.bitwise_xor(gs_array, gs_array1))
+        n[d_Hamming] += 1
+        
+        if verbose:
+            print(f"{i:} gs: {gs_array}     alpha: {alpha}   d_Hamming = {d_Hamming}")
+
+    N_n = np.mean(N_n)
+
+    return d, n, N_n, connected_counter
 
 
 

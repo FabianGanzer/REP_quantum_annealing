@@ -1,3 +1,12 @@
+"""This Program generates data and saves it into npy files.
+The method of data generation can be chosen:
+1) complete computation of an annealing run (takes a long time)
+2) exhaustive search among all possible basis states (faster)
+Since an ideal annealing process is simulated, both methods should 
+yield the same results.
+"""
+
+
 import numpy as np
 import time
 from annealing import solve_annealing, modify_coupling_matrix, get_groundstate, exhaustive_search
@@ -28,9 +37,9 @@ def check_data(fname, check_content=False):
     print(f"M                   = {loaded_data['M']}")
     print(f"K                   = {loaded_data['K']}")
     print(f"xi                  = {loaded_data['xi']}")
-    print(f"epsilon             = {loaded_data['epsilon']}")
-    print(f"gamma               = {loaded_data['gamma']}")
-    print(f"which_ctl_fct       = {loaded_data['which_ctl_fct']}")
+#    print(f"epsilon             = {loaded_data['epsilon']}")
+#    print(f"gamma               = {loaded_data['gamma']}")
+#    print(f"which_ctl_fct       = {loaded_data['which_ctl_fct']}")
     print("-----------------------------------------------------------")
     
     if check_content:
@@ -40,7 +49,7 @@ def check_data(fname, check_content=False):
             print(loaded_data[key])
 
 
-def generate_data_for_one_thres_annealing(neglection_thres, N_per_thres, N, M, alpha, K, xi, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time):
+def generate_data_for_one_thres_annealing(neglection_thres, neglection_rule, N_per_thres, N, M, alpha, K, xi, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time):
     """simulates the annealing for a single given neglection threshold"""
     # define data collection arrays
     J_data              = np.zeros(shape=(N_per_thres, N, N))
@@ -53,7 +62,7 @@ def generate_data_for_one_thres_annealing(neglection_thres, N_per_thres, N, M, a
     for j in range(N_per_thres):
         # solve problem
         J, b, *_ = get_ising_parameters(N, M, alpha, K, xi, False)
-        J_n, where_n = modify_coupling_matrix(J, 1, neglection_thres, False)
+        J_n, where_n = modify_coupling_matrix(J, neglection_rule, neglection_thres, False)
         _, _, _, _, _, _, _, _, Hscheduled = solve_annealing(J_n, b, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time, verbose=False, time_evolution=False)
         _, _, gs_array = get_groundstate(Hscheduled, 1)
 
@@ -68,7 +77,7 @@ def generate_data_for_one_thres_annealing(neglection_thres, N_per_thres, N, M, a
     return J_data, J_n_data, alpha_data, gs_array_data, where_n_data
 
 
-def generate_data_for_one_thres_exhaustive(neglection_thres, N_per_thres, N, M, alpha, K, xi):
+def generate_data_for_one_thres_exhaustive(neglection_thres, neglection_rule, N_per_thres, N, M, alpha, K, xi):
     """determines the state of lowest energy among all possible activity patterns"""       
     # remark: This is not the groundstate of the Hamiltonian. 
     # The groundstate of the Hamiltonian is a superposition of states of which the one with the 
@@ -89,7 +98,7 @@ def generate_data_for_one_thres_exhaustive(neglection_thres, N_per_thres, N, M, 
     # find the searched states
     for m in range(N_per_thres):
         J, b, *_ = get_ising_parameters(N, M, alpha, K, xi, False)
-        J_n, where_n = modify_coupling_matrix(J, 1, neglection_thres, False)
+        J_n, where_n = modify_coupling_matrix(J, neglection_rule, neglection_thres, False)
 
         minimum_energy_states = exhaustive_search(J_n, b)
         gs_array = minimum_energy_states[0]
@@ -109,10 +118,11 @@ def generate_data_for_one_thres_exhaustive(neglection_thres, N_per_thres, N, M, 
 
 def generate_data_and_save():
     # ------------ Parameters -------------
-    N_per_thres = 1000
-    thres_min = 0.0
-    thres_max = 0.4
-    thres_step = 0.01
+    N_per_thres = 100000
+    thres_min = 0     # good for neglection_rule=1: 0
+    thres_max = 15     # good for neglection_rule=1: 0.4
+    thres_step = 1   # good for neglection_rule=1: 0.01
+    neglection_rule = 2 # 0: smallest matrix element, 1: below thresold, 2: percentage
 
     N = 5               # number of users
     M = 4               # length of id-sequence for every user
@@ -126,19 +136,26 @@ def generate_data_and_save():
     epsilon = 0.1       # precision level for the control function (valid for both, linear and optimal scheduling)
     gamma = 1           # strength of the transverse field, irrelevant for us 
 
-    method = 0          # 0: computing complete annealing process 1: exhaustive search in state space to determine the state of minimum energy, i.e. the activity pattern
+    method = 1          # 0: computing complete annealing process 1: exhaustive search in state space to determine the state of minimum energy, i.e. the activity pattern
     append_to_existing_data = True  # if True, the newly generated data will be appended to the already existing files
 
     # -------------- Program -----------------
     
     if method == 0:
-        path = "./annealing_data/"
+            path = "./annealing_data/"
     elif method == 1:
         path = "./exhaustive_search_data/"
     else:
         print("Invalid method chosen -> couldn't assign path.")
     print(f"selected path: {path}")
-    
+
+    path += f"rule_{neglection_rule}/"
+
+    if neglection_rule == 1 and thres_max > 1:
+        print("A thresold > 1 is not sensible. All values will be < 1.")
+    if neglection_rule == 2 and thres_step != 1:
+        print("A step != 1 is not allowed for neglection_rule 2.")
+
     thres_min = float(thres_min)                # to ensure the filenames are always with e.g. in case of thres_min=0: 0.0 and not sometimes 0 but sometimes 0.0
     thres_max = float(thres_max)
 
@@ -188,9 +205,9 @@ def generate_data_and_save():
 
         # generate data
         if method == 0:
-            J_data, J_n_data, alpha_data, gs_array_data, where_n_data = generate_data_for_one_thres_annealing(neglection_thres, N_per_thres, N, M, alpha, K, xi, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time)
+            J_data, J_n_data, alpha_data, gs_array_data, where_n_data = generate_data_for_one_thres_annealing(neglection_thres, neglection_rule, N_per_thres, N, M, alpha, K, xi, gamma, epsilon, which_ctl_fct, nb_pts_gap, nb_pts_time)
         elif method == 1:
-            J_data, J_n_data, alpha_data, gs_array_data, where_n_data = generate_data_for_one_thres_exhaustive(neglection_thres, N_per_thres, N, M, alpha, K, xi)
+            J_data, J_n_data, alpha_data, gs_array_data, where_n_data = generate_data_for_one_thres_exhaustive(neglection_thres, neglection_rule, N_per_thres, N, M, alpha, K, xi)
 
         # check if a file of this configuration already exists - if yes, append the data instead of overwriting (if selected)
         fname = path + f"neglection_thres_{neglection_thres}_N_{N}_M_{M}_K_{K}_xi_{xi}.npy"
@@ -226,12 +243,17 @@ def generate_data_and_save():
             "M":                M,
             "K":                K,
             "xi":               xi,
-            "epsilon":          epsilon,
-            "gamma":            gamma,
-            "nb_pts_gap":       nb_pts_gap,
-            "nb_pts_time":      nb_pts_time,
-            "which_ctl_fct":    which_ctl_fct,
         }
+
+        if method == 0:
+            annealing_details_dict = {
+                "epsilon":          epsilon,
+                "gamma":            gamma,
+                "nb_pts_gap":       nb_pts_gap,
+                "nb_pts_time":      nb_pts_time,
+                "which_ctl_fct":    which_ctl_fct,
+            }
+            data_dict.update(annealing_details_dict)
 
         # save the dictionary
         np.save(fname, data_dict)
@@ -244,15 +266,9 @@ def generate_data_and_save():
     print(f"actual runtime of the program: {actual_runtime:.2f} min       (estimated runtime of program was: {estimated_runtime:.2f} min) (actual/estimated = {actual_runtime/estimated_runtime:.2f})")
 
     check_data(fname)
-
-
-def main():
-    generate_data_and_save()
-    
-    
     
 
 
 if __name__ == "__main__":
-    main()
+    generate_data_and_save()
 
