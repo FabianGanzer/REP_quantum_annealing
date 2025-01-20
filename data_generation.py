@@ -118,11 +118,11 @@ def generate_data_for_one_thres_exhaustive(neglection_thres, neglection_rule, N_
 
 def generate_data_and_save():
     # ------------ Parameters -------------
-    N_per_thres = 100000
+    N_per_thres = 4000
     thres_min = 0     # good for neglection_rule=1: 0
-    thres_max = 15     # good for neglection_rule=1: 0.4
+    thres_max = 4     # good for neglection_rule=1: 0.4
     thres_step = 1   # good for neglection_rule=1: 0.01
-    neglection_rule = 2 # 0: smallest matrix element, 1: below thresold, 2: percentage
+    neglection_rule = 3 # 0: smallest matrix element, 1: below thresold, 2: percentage
 
     N = 5               # number of users
     M = 4               # length of id-sequence for every user

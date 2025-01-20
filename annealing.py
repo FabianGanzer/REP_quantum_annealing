@@ -85,6 +85,8 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
     - J                     coupling matrix of the Ising Hamiltonian
     - neglection_rule       0: set matrix element of lowest absolute value to zero
                             1: set all matrix elements of absolute value lower than neglection_thres to zero
+                            2: set a certain total number of matrix elements to zero starting with the smallest one
+                            3: set matrix elements to zero such that each node only has a certain maximum degree. Algorithm starts checking from the smallest matrix element
     - neglection_thres      only used if neglection_rule = 1
     
     Returns:
@@ -92,7 +94,10 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
     - where_n               np.where object containing the indices of all neglected matrix elements
     """
     J_n = np.copy(J)
-    
+
+    if verbose:
+        print(f"Matrix J before neglection of matrix elements: \n{J}")
+
     if neglection_rule == 0:
         where_n = np.where(J_n==-np.min(np.abs(J_n[J_n!=0])))       # complicated construction because the matrix elements of J are negative 
     
@@ -101,7 +106,7 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
         where_n = np.where(J_n > -neglection_thres)   
         J_n[J_n==-np.inf] = 0        
     
-    elif neglection_rule == 2:            # neglecting a certain percentage of couplings
+    elif neglection_rule == 2:            # neglecting a certain number of couplings
         sorted_1d_indices = np.argsort(np.abs(J), axis=None)
         sorted_2d_indices = np.unravel_index(sorted_1d_indices, np.shape(J))
         N = np.shape(J)[0]
@@ -109,20 +114,20 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
         i_upper = i_lower + int(neglection_thres)
         where_n = (sorted_2d_indices[0][i_lower:i_upper], sorted_2d_indices[1][i_lower:i_upper])
 
-    elif neglection_rule == 3:          # für jeden Qubit nur eine max. Anzahl an Verbindungen zulassen. 
+    elif neglection_rule == 3:          # for every qubit only allow a maximum number of couplings 
         sorted_1d_indices = np.argsort(np.abs(J), axis=None)
-        sorted_2d_indices = np.unravel_index(sorted_1d_indices, np.shape(J))
+        #sorted_2d_indices = np.unravel_index(sorted_1d_indices, np.shape(J))
         N = np.shape(J)[0]
-        where_n1 = []
-        where_n2 = []
+        where_n1 = []           # first index of the 2d where object indicating which couplings to neglect
+        where_n2 = []           # second index of the 2d where object indicating which couplings to neglect
+        where_n = (np.array(where_n1, dtype=int), np.array(where_n2, dtype=int))
         J_n = np.copy(J)
 
         for i in range(int(N*(N-1)/2)):
-            A = adjacency_from_couplings(J_n)
-            j = int(N*(N+1)/2) + i              # index of matrix element that should be checked
-            discard = check_matrix_element(J, j, neglection_thres)
+            j = int(N*(N+1)/2) + i              # 1d index of index of matrix element that should be checked
+            discard = degree_too_large(J_n, sorted_1d_indices[j], neglection_thres)
             if discard:
-                i1, i2 = np.unravel_index(j, np.shape(J))
+                i1, i2 = np.unravel_index(sorted_1d_indices[j], np.shape(J))
                 where_n1.append(i1)
                 where_n2.append(i2)
                 where_n = (np.array(where_n1, dtype=int), np.array(where_n2, dtype=int))
@@ -132,7 +137,7 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
         print("unknown neglection rule!")
     
     if verbose:
-        print(f"\nmatrxelement(s) set to zero: {J_n[where_n]}")
+        print(f"\nmatrixelement(s) set to zero: {J[where_n]}")
     J_n[where_n] = 0
 
     if verbose:
@@ -142,17 +147,24 @@ def modify_coupling_matrix(J, neglection_rule, neglection_thres=0.1, verbose=Tru
     return J_n, where_n
 
 
-def check_matrix_element(J, j, max_degree):
-    """checks if a coupling is between nodes whose degree is larger than a max degree"""
+def degree_too_large(J, j, max_degree):
+    """checks if a coupling in J is between nodes whose degree is larger than a max degree
+    Returns:
+    - True      if one of both nodes connected by coupling j has a degree larger than the given max degree
+    - False     otherwise
+    """
+    # calculate degrees
     ix, iy = np.unravel_index(j, np.shape(J))
     degreex = np.sum(adjacency_from_couplings(J)[ix, :])
     degreey = np.sum(adjacency_from_couplings(J)[:, iy])
+
+    # check if a degree is too large
     if degreex > max_degree:
-        return 1
+        return True
     if degreey > max_degree:
-        return 1
+        return True
     
-    return 0
+    return False
 
 
 def get_groundstate(Hscheduled, t):
@@ -250,21 +262,28 @@ def main():
     """main for testing purposes"""
     from telecom import get_ising_parameters
     import time
+    from graph import degree_of_nodes, draw_graph
     #J, b, *_ = get_ising_parameters(5, 4, [1, 1, 0, 0, 0], 100, 0)
     #t0 = time.time()
     #solve_annealing(J, b, 1, 0.1, 1, 20, 30, False, False)
     #t1 = time.time()
     #print(f"{t1-t0} s")
 
-    J = np.array([[0, -7, -9], 
-                  [0, 0, -6],
-                  [0, 0, 0]])
+    J = 0.1*np.array([[0, -7, 0, 0], 
+                  [0, 0, -10, -9],
+                  [0, 0, 0, -6],
+                  [0, 0, 0, 0]])
     
-    J_n, where_n = modify_coupling_matrix(J, 2, 0, False)
-    print(J)
-    print(J_n)
-    print(where_n)
-
+    print(f"degrees before neglection: {degree_of_nodes(adjacency_from_couplings(J))}")
+    max_degree = 1
+    print(degree_too_large(J, j=1, max_degree=max_degree))
+    J_n, where_n = modify_coupling_matrix(J, neglection_rule=3, neglection_thres=max_degree)
+    print(f"degrees after neglection: {degree_of_nodes(adjacency_from_couplings(J_n))}")
+    
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    draw_graph(ax, J_n)
+    plt.show()
 
 if __name__ == "__main__":
     main()
