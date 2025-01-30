@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Hamming distance}{2}{section.1}%
+\contentsline {section}{\numberline {2}Comparison with a conventional correlation receiver (CCR)}{3}{section.2}%
+\contentsline {section}{\numberline {3}Dependence on the degree of the nodes}{3}{section.3}%
+\contentsline {section}{\numberline {4}Dependence on the connectedness of the graph}{4}{section.4}%

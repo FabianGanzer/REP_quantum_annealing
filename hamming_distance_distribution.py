@@ -1,3 +1,7 @@
+"""set of functions tracking the haming distance between the result of an 
+annealing process and the actual activity pattern while sweeping the 
+neglection parameter (thresold, number or max. degree of nodes)"""
+
 import numpy as np
 from scipy.stats import uniform_direction
 from telecom import get_ising_parameters, CCR, generate_signal

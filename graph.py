@@ -1,11 +1,16 @@
+"""useful functions for drawing and analyzing graphs represented by a matrix"""
+
 import numpy as np
 
 def matrix_histogram(fig, matrix, where_red, N_row=1, N_col=1, ax_index=1):
     """draws the matrix elements as a histogram
     Parameters:
     - fig           plt.figure() to draw on
-    - matrix
+    - matrix        matrix whose elements should be represented by a 2d histogram
     - where_red     np.where(...) that contains the indices of those matrix elements that should be highlighted in red
+    - N_row         the number of rows of the figure (necessary if the histogram is not the only plot in the figure)
+    - N_col         the number of columns of the figure (necessary if the histogram is not the only plot in the figure)
+    - ax_index      index of the matrix histogram plot in the figure (necessary if the histogram is not the only plot in the figure)
     """
     N = np.shape(matrix)[0]
 
