@@ -85,8 +85,8 @@ def hamming_distance_distribution_exhaustive(N_repeat, N, M, alpha, K, xi, negle
     groundstates of the final hamiltonian with and without modification is computed.
     
     Returns:
-    - d                 Hamming distance
-    - n                 number of occurences of Hamming distance d
+    - d                 Hamming distance array of all possible hamming distances
+    - n                 number of occurences of Hamming distance d. Array of equal shape as d.
     - N_n               number of neglected matrix elements in J averaged over all N_repeat runs of the annealing process
     - connected_counter count of the number of instances in which the graph with neglected matrix elements is connected 
     """

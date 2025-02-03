@@ -1,5 +1,14 @@
 \babel@toc {english}{}\relax 
-\contentsline {section}{\numberline {1}Hamming distance}{2}{section.1}%
-\contentsline {section}{\numberline {2}Comparison with a conventional correlation receiver (CCR)}{3}{section.2}%
-\contentsline {section}{\numberline {3}Dependence on the degree of the nodes}{3}{section.3}%
-\contentsline {section}{\numberline {4}Dependence on the connectedness of the graph}{4}{section.4}%
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {section}{\numberline {2}System model}{2}{section.2}%
+\contentsline {section}{\numberline {3}Methods for rejection of couplings}{3}{section.3}%
+\contentsline {paragraph}{Threshold method.}{3}{section*.2}%
+\contentsline {paragraph}{Number method.}{3}{section*.3}%
+\contentsline {paragraph}{Degree method.}{4}{section*.4}%
+\contentsline {section}{\numberline {4}Hamming distance}{4}{section.4}%
+\contentsline {section}{\numberline {5}Comparison with a conventional correlation receiver (CCR)}{5}{section.5}%
+\contentsline {section}{\numberline {6}Energy for increasing rejection thresholds}{6}{section.6}%
+\contentsline {section}{\numberline {7}Dependence on the degree of the nodes}{6}{section.7}%
+\contentsline {section}{\numberline {8}Dependence on the connectedness of the graph}{7}{section.8}%
+\contentsline {section}{\numberline {9}Comparison of different rejection methods}{8}{section.9}%
+\contentsline {section}{\numberline {10}Summary and outlook}{10}{section.10}%

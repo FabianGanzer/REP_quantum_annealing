@@ -192,15 +192,15 @@ def CCR(Y, P, T, verbose=False):
     f = np.zeros(shape=(N, K))             # correlation measure
     for n in range(N):
         for k in range(K):
-            f[n, k] = np.sum(Y_normed[:, k]*P[:, n])
+            f[n, k] = np.sum(Y_normed[:, k]*P[:, n])        # correlation between signal at received at antenna k and pilot for user n
 
-    # average the correlations over the channels
+    # average the absolute values of the correlations over the channels
     if verbose:
         print(f"matrix of correlations:\n{f}")
     f = np.abs(f)
     f = np.mean(f, axis=1)
 
-    # find the activity pattern according to the thresold
+    # find the activity pattern according to the threshold
     alpha_CCR = np.zeros(N, dtype=int)
     alpha_CCR[f>T] = 1
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.15)  30 JAN 2025 19:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.15)  3 FEB 2025 17:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -579,31 +579,34 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks36
 \@floatcapt=\box67
 )
+(/usr/share/texlive/texmf-dist/tex/latex/doublestroke/dsfont.sty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+)
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 28.
+(hyperref)                removing `\\' on input line 29.
 
 (./REP_QA.aux)
 \openout1 = `REP_QA.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -675,7 +678,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 40.
+Package hyperref Info: Link coloring ON on input line 42.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -687,9 +690,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count328
 )
-LaTeX Info: Redefining \ref on input line 40.
-LaTeX Info: Redefining \pageref on input line 40.
-LaTeX Info: Redefining \nameref on input line 40.
+LaTeX Info: Redefining \ref on input line 42.
+LaTeX Info: Redefining \pageref on input line 42.
+LaTeX Info: Redefining \nameref on input line 42.
 
 (./REP_QA.out) (./REP_QA.out)
 \@outlinefile=\write5
@@ -702,13 +705,13 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 40.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 42.
+or `english'. on input line 42.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 44.
 
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 42.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 44.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -721,125 +724,188 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<img/hamming_rule_1.png, id=38, 411.939pt x 315.0972pt>
+LaTeX Font Info:    Trying to load font information for U+dsrom on input line 7
+0.
+
+(/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
+File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
+) [2] [3]
+<img/hamming_rule_1.png, id=111, 411.939pt x 315.0972pt>
 File: img/hamming_rule_1.png Graphic file (type png)
 <use img/hamming_rule_1.png>
-Package pdftex.def Info: img/hamming_rule_1.png  used on input line 48.
-(pdftex.def)             Requested size: 320.0935pt x 244.84207pt.
-<img/N_neglected_rule_1.png, id=40, 406.1574pt x 315.0972pt>
+Package pdftex.def Info: img/hamming_rule_1.png  used on input line 139.
+(pdftex.def)             Requested size: 209.1301pt x 159.9618pt.
+<img/uer_rule_1.png, id=113, 409.7709pt x 315.0972pt>
+File: img/uer_rule_1.png Graphic file (type png)
+<use img/uer_rule_1.png>
+Package pdftex.def Info: img/uer_rule_1.png  used on input line 145.
+(pdftex.def)             Requested size: 209.1301pt x 160.81282pt.
+<img/N_neglected_rule_1.png, id=117, 406.1574pt x 315.0972pt>
 File: img/N_neglected_rule_1.png Graphic file (type png)
 <use img/N_neglected_rule_1.png>
-Package pdftex.def Info: img/N_neglected_rule_1.png  used on input line 55.
-(pdftex.def)             Requested size: 320.0935pt x 248.32787pt.
-<img/N_connected_rule_1.png, id=41, 412.6617pt x 315.0972pt>
+Package pdftex.def Info: img/N_neglected_rule_1.png  used on input line 162.
+(pdftex.def)             Requested size: 209.1301pt x 162.2408pt.
+<img/N_connected_rule_1.png, id=118, 412.6617pt x 315.0972pt>
 File: img/N_connected_rule_1.png Graphic file (type png)
 <use img/N_connected_rule_1.png>
-Package pdftex.def Info: img/N_connected_rule_1.png  used on input line 62.
-(pdftex.def)             Requested size: 320.0935pt x 244.41415pt.
+Package pdftex.def Info: img/N_connected_rule_1.png  used on input line 168.
+(pdftex.def)             Requested size: 209.1301pt x 159.68295pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-Overfull \hbox (10.92311pt too wide) in paragraph at lines 67--67
+[4 <./img/hamming_rule_1.png> <./img/uer_rule_1.png>]
+Overfull \hbox (10.92311pt too wide) in paragraph at lines 181--181
 []\OT1/cmr/bx/n/14.4 Comparison with a con-ven-tional cor-re-la-tion re-ceiver 
 (CCR) 
  []
 
-[2 <./img/hamming_rule_1.png> <./img/N_neglected_rule_1.png>]
-<img/deg_min.png, id=52, 425.6703pt x 312.2064pt>
+<img/CCR_sweep.png, id=134, 416.2752pt x 312.9291pt>
+File: img/CCR_sweep.png Graphic file (type png)
+<use img/CCR_sweep.png>
+Package pdftex.def Info: img/CCR_sweep.png  used on input line 200.
+(pdftex.def)             Requested size: 320.0935pt x 240.63622pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5 <./img/N_neglected_rule_1.png> <./img/N_connected_rule_1.png>]
+<img/energy.png, id=147, 426.393pt x 315.0972pt>
+File: img/energy.png Graphic file (type png)
+<use img/energy.png>
+Package pdftex.def Info: img/energy.png  used on input line 212.
+(pdftex.def)             Requested size: 320.0935pt x 236.54828pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<img/deg_min.png, id=149, 425.6703pt x 312.2064pt>
 File: img/deg_min.png Graphic file (type png)
 <use img/deg_min.png>
-Package pdftex.def Info: img/deg_min.png  used on input line 75.
+Package pdftex.def Info: img/deg_min.png  used on input line 225.
 (pdftex.def)             Requested size: 140.84192pt x 103.29997pt.
-<img/deg_avg.png, id=53, 419.166pt x 312.9291pt>
+<img/deg_avg.png, id=150, 419.166pt x 312.9291pt>
 File: img/deg_avg.png Graphic file (type png)
 <use img/deg_avg.png>
-Package pdftex.def Info: img/deg_avg.png  used on input line 78.
+Package pdftex.def Info: img/deg_avg.png  used on input line 228.
 (pdftex.def)             Requested size: 140.84192pt x 105.14345pt.
-<img/deg_max.png, id=54, 591.20876pt x 433.62pt>
+<img/deg_max.png, id=151, 591.20876pt x 433.62pt>
 File: img/deg_max.png Graphic file (type png)
 <use img/deg_max.png>
-Package pdftex.def Info: img/deg_max.png  used on input line 81.
+Package pdftex.def Info: img/deg_max.png  used on input line 231.
 (pdftex.def)             Requested size: 140.84192pt x 103.29678pt.
 
-Overfull \hbox (15.73438pt too wide) in paragraph at lines 75--82
+Overfull \hbox (15.73438pt too wide) in paragraph at lines 225--232
 [][][][][][] 
  []
 
-<img/deg_ratio.png, id=56, 416.2752pt x 312.2064pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<img/deg_ratio.png, id=153, 416.2752pt x 312.2064pt>
 File: img/deg_ratio.png Graphic file (type png)
 <use img/deg_ratio.png>
-Package pdftex.def Info: img/deg_ratio.png  used on input line 90.
+Package pdftex.def Info: img/deg_ratio.png  used on input line 240.
 (pdftex.def)             Requested size: 320.0935pt x 240.08049pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3 <./img/N_connected_rule_1.png> <./img/deg_min.png> <./img/deg_avg.png> <./im
-g/deg_max.png>]
-<img/connected_unconnected_rule_1.png, id=75, 416.2752pt x 315.0972pt>
+[6 <./img/ccr_sweep.png>]
+<img/connected_unconnected_rule_1.png, id=165, 416.2752pt x 315.0972pt>
 File: img/connected_unconnected_rule_1.png Graphic file (type png)
 <use img/connected_unconnected_rule_1.png>
 Package pdftex.def Info: img/connected_unconnected_rule_1.png  used on input li
-ne 103.
+ne 253.
 (pdftex.def)             Requested size: 320.0935pt x 242.30345pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-LaTeX Warning: Reference `fig:' on page 4 undefined on input line 109.
-
-<img/connected_unconnected_rule_2.png, id=77, 409.7709pt x 312.2064pt>
+[7 <./img/energy.png> <./img/deg_min.png> <./img/deg_avg.png> <./img/deg_max.pn
+g>]
+<img/connected_unconnected_rule_2.png, id=183, 409.7709pt x 312.2064pt>
 File: img/connected_unconnected_rule_2.png Graphic file (type png)
 <use img/connected_unconnected_rule_2.png>
 Package pdftex.def Info: img/connected_unconnected_rule_2.png  used on input li
-ne 115.
+ne 265.
 (pdftex.def)             Requested size: 209.1301pt x 159.3375pt.
-<img/connected_unconnected_rule_3.png, id=78, 409.7709pt x 312.2064pt>
+<img/connected_unconnected_rule_3.png, id=184, 409.7709pt x 312.2064pt>
 File: img/connected_unconnected_rule_3.png Graphic file (type png)
 <use img/connected_unconnected_rule_3.png>
 Package pdftex.def Info: img/connected_unconnected_rule_3.png  used on input li
-ne 118.
+ne 268.
 (pdftex.def)             Requested size: 209.1301pt x 159.3375pt.
 
-Overfull \hbox (4.80215pt too wide) in paragraph at lines 115--119
+Overfull \hbox (4.80215pt too wide) in paragraph at lines 265--269
 [][][][] 
  []
 
-[4 <./img/deg_ratio.png>] [5 <./img/connected_unconnected_rule_1.png> <./img/co
-nnected_unconnected_rule_2.png> <./img/connected_unconnected_rule_3.png>]
-(./REP_QA.aux)
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: `h' float specifier changed to `ht'.
 
+<img/method_comparison_correct_ratio.png, id=187, 419.166pt x 312.2064pt>
+File: img/method_comparison_correct_ratio.png Graphic file (type png)
+<use img/method_comparison_correct_ratio.png>
+Package pdftex.def Info: img/method_comparison_correct_ratio.png  used on input
+ line 279.
+(pdftex.def)             Requested size: 320.0935pt x 238.4179pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8 <./img/deg_ratio.png>]
+<img/method_comparison_connected_ratio.png, id=196, 419.166pt x 312.2064pt>
+File: img/method_comparison_connected_ratio.png Graphic file (type png)
+<use img/method_comparison_connected_ratio.png>
+Package pdftex.def Info: img/method_comparison_connected_ratio.png  used on inp
+ut line 287.
+(pdftex.def)             Requested size: 320.0935pt x 238.4179pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9 <./img/connected_unconnected_rule_1.png> <./img/connected_unconnected_rule_2
+.png> <./img/connected_unconnected_rule_3.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 297--300
+
+ []
+
+[10 <./img/method_comparison_correct_ratio.png>] [11 <./img/method_comparison_c
+onnected_ratio.png>] (./REP_QA.aux)
 Package rerunfilecheck Info: File `REP_QA.out' has not changed.
-(rerunfilecheck)             Checksum: 3A755683045E004D64E5517814611996;1005.
+(rerunfilecheck)             Checksum: 64AB3BFFB7024E218F6D83AB049DB860;2110.
  ) 
 Here is how much of TeX's memory you used:
- 20150 strings out of 478287
- 384026 string characters out of 5849289
- 689265 words of memory out of 5000000
- 38010 multiletter control sequences out of 15000+600000
- 476983 words of font info for 59 fonts, out of 8000000 for 9000
+ 20296 strings out of 478287
+ 387100 string characters out of 5849289
+ 698528 words of memory out of 5000000
+ 38099 multiletter control sequences out of 15000+600000
+ 478561 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,10n,92p,1250b,795s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+ 94i,12n,92p,1556b,780s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/dou
+blestroke/dsrom10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb>
 
-Output written on REP_QA.pdf (5 pages, 326638 bytes).
+Output written on REP_QA.pdf (11 pages, 572812 bytes).
 PDF statistics:
- 158 PDF objects out of 1000 (max. 8388607)
- 105 compressed objects within 2 object streams
- 23 named destinations out of 1000 (max. 500000)
- 95 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 333 PDF objects out of 1000 (max. 8388607)
+ 245 compressed objects within 3 object streams
+ 61 named destinations out of 1000 (max. 500000)
+ 168 words of extra memory for PDF output out of 10000 (max. 10000000)
 
