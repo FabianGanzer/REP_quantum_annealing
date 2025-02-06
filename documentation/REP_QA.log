@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.15)  3 FEB 2025 17:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.15)  4 FEB 2025 15:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -773,22 +773,19 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: img/energy.png Graphic file (type png)
 <use img/energy.png>
 Package pdftex.def Info: img/energy.png  used on input line 212.
-(pdftex.def)             Requested size: 320.0935pt x 236.54828pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<img/deg_min.png, id=149, 425.6703pt x 312.2064pt>
+(pdftex.def)             Requested size: 311.55586pt x 230.2402pt.
+ [6 <./img/ccr_sweep.png> <./img/energy.png>]
+<img/deg_min.png, id=156, 425.6703pt x 312.2064pt>
 File: img/deg_min.png Graphic file (type png)
 <use img/deg_min.png>
 Package pdftex.def Info: img/deg_min.png  used on input line 225.
 (pdftex.def)             Requested size: 140.84192pt x 103.29997pt.
-<img/deg_avg.png, id=150, 419.166pt x 312.9291pt>
+<img/deg_avg.png, id=157, 419.166pt x 312.9291pt>
 File: img/deg_avg.png Graphic file (type png)
 <use img/deg_avg.png>
 Package pdftex.def Info: img/deg_avg.png  used on input line 228.
 (pdftex.def)             Requested size: 140.84192pt x 105.14345pt.
-<img/deg_max.png, id=151, 591.20876pt x 433.62pt>
+<img/deg_max.png, id=158, 591.20876pt x 433.62pt>
 File: img/deg_max.png Graphic file (type png)
 <use img/deg_max.png>
 Package pdftex.def Info: img/deg_max.png  used on input line 231.
@@ -798,37 +795,27 @@ Overfull \hbox (15.73438pt too wide) in paragraph at lines 225--232
 [][][][][][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<img/deg_ratio.png, id=153, 416.2752pt x 312.2064pt>
+<img/deg_ratio.png, id=160, 416.2752pt x 312.2064pt>
 File: img/deg_ratio.png Graphic file (type png)
 <use img/deg_ratio.png>
 Package pdftex.def Info: img/deg_ratio.png  used on input line 240.
 (pdftex.def)             Requested size: 320.0935pt x 240.08049pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[6 <./img/ccr_sweep.png>]
-<img/connected_unconnected_rule_1.png, id=165, 416.2752pt x 315.0972pt>
+[7 <./img/deg_min.png> <./img/deg_avg.png> <./img/deg_max.png> <./img/deg_ratio
+.png>]
+<img/connected_unconnected_rule_1.png, id=180, 416.2752pt x 315.0972pt>
 File: img/connected_unconnected_rule_1.png Graphic file (type png)
 <use img/connected_unconnected_rule_1.png>
 Package pdftex.def Info: img/connected_unconnected_rule_1.png  used on input li
 ne 253.
 (pdftex.def)             Requested size: 320.0935pt x 242.30345pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[7 <./img/energy.png> <./img/deg_min.png> <./img/deg_avg.png> <./img/deg_max.pn
-g>]
-<img/connected_unconnected_rule_2.png, id=183, 409.7709pt x 312.2064pt>
+ [8 <./img/connected_unconnected_rule_1.png>]
+<img/connected_unconnected_rule_2.png, id=189, 409.7709pt x 312.2064pt>
 File: img/connected_unconnected_rule_2.png Graphic file (type png)
 <use img/connected_unconnected_rule_2.png>
 Package pdftex.def Info: img/connected_unconnected_rule_2.png  used on input li
 ne 265.
 (pdftex.def)             Requested size: 209.1301pt x 159.3375pt.
-<img/connected_unconnected_rule_3.png, id=184, 409.7709pt x 312.2064pt>
+<img/connected_unconnected_rule_3.png, id=190, 409.7709pt x 312.2064pt>
 File: img/connected_unconnected_rule_3.png Graphic file (type png)
 <use img/connected_unconnected_rule_3.png>
 Package pdftex.def Info: img/connected_unconnected_rule_3.png  used on input li
@@ -839,44 +826,33 @@ Overfull \hbox (4.80215pt too wide) in paragraph at lines 265--269
 [][][][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<img/method_comparison_correct_ratio.png, id=187, 419.166pt x 312.2064pt>
+<img/method_comparison_correct_ratio.png, id=193, 419.166pt x 312.2064pt>
 File: img/method_comparison_correct_ratio.png Graphic file (type png)
 <use img/method_comparison_correct_ratio.png>
 Package pdftex.def Info: img/method_comparison_correct_ratio.png  used on input
  line 279.
 (pdftex.def)             Requested size: 320.0935pt x 238.4179pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[8 <./img/deg_ratio.png>]
-<img/method_comparison_connected_ratio.png, id=196, 419.166pt x 312.2064pt>
+[9 <./img/connected_unconnected_rule_2.png> <./img/connected_unconnected_rule_3
+.png> <./img/method_comparison_correct_ratio.png>]
+<img/method_comparison_connected_ratio.png, id=206, 419.166pt x 312.2064pt>
 File: img/method_comparison_connected_ratio.png Graphic file (type png)
 <use img/method_comparison_connected_ratio.png>
 Package pdftex.def Info: img/method_comparison_connected_ratio.png  used on inp
 ut line 287.
 (pdftex.def)             Requested size: 320.0935pt x 238.4179pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[9 <./img/connected_unconnected_rule_1.png> <./img/connected_unconnected_rule_2
-.png> <./img/connected_unconnected_rule_3.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 297--300
 
  []
 
-[10 <./img/method_comparison_correct_ratio.png>] [11 <./img/method_comparison_c
-onnected_ratio.png>] (./REP_QA.aux)
+[10 <./img/method_comparison_connected_ratio.png>] [11] (./REP_QA.aux)
 Package rerunfilecheck Info: File `REP_QA.out' has not changed.
 (rerunfilecheck)             Checksum: 64AB3BFFB7024E218F6D83AB049DB860;2110.
  ) 
 Here is how much of TeX's memory you used:
  20296 strings out of 478287
  387100 string characters out of 5849289
- 698528 words of memory out of 5000000
+ 698527 words of memory out of 5000000
  38099 multiletter control sequences out of 15000+600000
  478561 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -902,7 +878,7 @@ blestroke/dsrom10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb>
 
-Output written on REP_QA.pdf (11 pages, 572812 bytes).
+Output written on REP_QA.pdf (11 pages, 572919 bytes).
 PDF statistics:
  333 PDF objects out of 1000 (max. 8388607)
  245 compressed objects within 3 object streams

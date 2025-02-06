@@ -8,7 +8,7 @@
 \contentsline {section}{\numberline {4}Hamming distance}{4}{section.4}%
 \contentsline {section}{\numberline {5}Comparison with a conventional correlation receiver (CCR)}{5}{section.5}%
 \contentsline {section}{\numberline {6}Energy for increasing rejection thresholds}{6}{section.6}%
-\contentsline {section}{\numberline {7}Dependence on the degree of the nodes}{6}{section.7}%
-\contentsline {section}{\numberline {8}Dependence on the connectedness of the graph}{7}{section.8}%
-\contentsline {section}{\numberline {9}Comparison of different rejection methods}{8}{section.9}%
+\contentsline {section}{\numberline {7}Dependence on the degree of the nodes}{7}{section.7}%
+\contentsline {section}{\numberline {8}Dependence on the connectedness of the graph}{8}{section.8}%
+\contentsline {section}{\numberline {9}Comparison of different rejection methods}{9}{section.9}%
 \contentsline {section}{\numberline {10}Summary and outlook}{10}{section.10}%
