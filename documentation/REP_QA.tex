@@ -42,7 +42,7 @@
 \begin{document}
 	\maketitle 
 	\begin{abstract}
-		To solve the active user detection problem, a quantum annealer can be used. To mitigate the effect of noise leading to a degraded accuracy, the original problem can be simplified by rejecting couplings in the coupling matrix of the Ising model. In this project, three methods for the rejection of those matrix elements are studied.´
+		To solve the active user detection problem, a quantum annealer can be used. To mitigate the effect of noise leading to a degraded accuracy, the original problem can be simplified by rejecting couplings in the coupling matrix of the Ising model. In this project, three methods for the rejection of those matrix elements are studied.
 	\end{abstract}
 	\tableofcontents
 	\newpage
@@ -52,7 +52,7 @@
 	
 	Luckily, the mathematical formulation thereof can be mapped to an Ising Hamiltonian which allows to solve the active user detection problem using a quantum annealer promising a significant speedup. This however raises practical problems of accuracy. The larger the problem gets one is trying to solve, the more qubits are necessary, the more problematic the noise gets and therefore the more the accuracy decreases. 
 	
-	Our approach to mitigate these effects, is to modify the problem in advance in order to reduce the amount of necessary qubits. This modification is expected to reduce the influence of noise during the annealing process, however it introduces new errors because the problem itself is simplified and therefore it is not anymore equivalent to the problem one actually is trying to solve. If however the modifications are small, the results obtained by solving the simplified version of the problem might still be useful for the original, non-simplified version of the problem. The overarching goal would thus be to answer the following question: Does one reach a higher rate of correct active user detections by simplifying the problem, thus having less noise but thereby introducing errors in the problem itself or is it more favorable to stick to the original, more complex problem without any errors however having to accept more noise during the annealing process?
+	Our approach to mitigate these effects is to modify the problem in advance in order to reduce the number of necessary qubits. This modification is expected to reduce the influence of noise during the annealing process, however it introduces new errors because the problem itself is simplified and therefore it is not anymore equivalent to the problem one is actually trying to solve. If however the modifications are small, the results obtained by solving the simplified version of the problem might still be useful for the original, non-simplified version of the problem. The overarching goal would thus be to answer the following question: Does one reach a higher rate of correct active user detections by simplifying the problem, thus having less noise but thereby introducing errors in the problem itself or is it more favorable to stick to the original, more complex problem without any errors however having to accept more noise during the annealing process?
 	
 	This work aims to progress on one part of this overarching question. It focuses only on the errors that are introduced by the modification of the problem. This means, an ideal annealing process without any noise is considered.  
 	
